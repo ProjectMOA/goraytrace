@@ -1,4 +1,4 @@
-package math
+package math3d
 
 import (
 	"fmt"
@@ -7,7 +7,8 @@ import (
 
 const threshold float64 = 0.00001
 
-// Vector3 represents a 3D vector of floats
+// Vector3 holds three floats that represent X Y and Z space.
+// It holds both 3D vectors and 3D points.
 type Vector3 struct {
 	X, Y, Z float64
 }
@@ -57,18 +58,47 @@ func (v *Vector3) Cross(v2 *Vector3) *Vector3 {
 		v.X*v2.Y - v.Y*v2.X}
 }
 
+// Subtract returns the vector that goes from pointA to
+// pointB.
+func Subtract(pointA *Vector3, pointB *Vector3) *Vector3 {
+	return &Vector3{X: pointA.X - pointB.X,
+		Y: pointA.Y - pointB.Y,
+		Z: pointA.Z - pointB.Z}
+}
+
+// Distance returns the distance from pointA to pointB.
+func Distance(pointA *Vector3, pointB *Vector3) float64 {
+	return Subtract(pointA, pointB).Abs()
+}
+
 // Equal returns true if both vectors are the same within a
 // margin of error
 func (v *Vector3) Equal(v2 *Vector3) bool {
-	return v.X-v2.X < threshold &&
-		v.Y-v2.Y < threshold &&
-		v.Z-v2.Z < threshold
+	return math.Abs(v.X-v2.X) < threshold &&
+		math.Abs(v.Y-v2.Y) < threshold &&
+		math.Abs(v.Z-v2.Z) < threshold
 }
 
 // Differ returns true if the vectors are not the same within a
-// margin of error
+// margin of error.
 func (v *Vector3) Differ(v2 *Vector3) bool {
 	return !v.Equal(v2)
+}
+
+// LesserOrEqual returns true if the first vector is smaller or
+// equal in the three axes.
+func (v *Vector3) LesserOrEqual(v2 *Vector3) bool {
+	return v.X-v2.X <= threshold &&
+		v.Y-v2.Y <= threshold &&
+		v.Z-v2.Z <= threshold
+}
+
+// GreaterOrEqual returns true if the first vector is greater or
+// equal in the three axes.
+func (v *Vector3) GreaterOrEqual(v2 *Vector3) bool {
+	return v2.X-v.X <= threshold &&
+		v2.Y-v.Y <= threshold &&
+		v2.Z-v.Z <= threshold
 }
 
 func (v *Vector3) String() string {
