@@ -45,7 +45,12 @@ func (v *Vector3) Subtract(v2 *Vector3) *Vector3 {
 }
 
 // Dot returns the dot product of the 3D vectors
-func (v *Vector3) Dot(v2 *Vector3) *Vector3 {
+func (v *Vector3) Dot(v2 *Vector3) float64 {
+	return v.X*v2.X + v.Y*v2.Y + v.Z*v2.Z
+}
+
+// Cross returns the cross product of the 3D vectors
+func (v *Vector3) Cross(v2 *Vector3) *Vector3 {
 	return &Vector3{
 		v.Y*v2.Z - v.Z*v2.Y,
 		v.Z*v2.X - v.X*v2.Z,
