@@ -4,23 +4,20 @@ import "github.com/ProjectMOA/goraytrace/shape"
 
 // Scene defines a 3D scene that holds volumetric shapes
 type Scene struct {
-	spheres []*shape.Sphere
+	shapes []shape.Shape
 }
 
 // New creates a new empty scene
 func New() *Scene {
-	return &Scene{spheres: make([]*shape.Sphere, 0, 10)}
+	return &Scene{shapes: make([]shape.Shape, 0, 10)}
 }
 
 // Elements returns the number of elements in the scene
 func (s *Scene) Elements() int {
-	return len(s.spheres)
+	return len(s.shapes)
 }
 
-// Add adds a sphere to the array of spheres in this scene.
-// Eventually, when go makes more sense, spheres should be
-// a list of shapes in some way so that all possible shapes
-// are stored in a unique block of memory.
-func (s *Scene) Add(sphere *shape.Sphere) {
-	s.spheres = append(s.spheres, sphere)
+// Add adds a shape to the scene.
+func (s *Scene) Add(aShape shape.Shape) {
+	s.shapes = append(s.shapes, aShape)
 }
