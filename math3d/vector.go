@@ -7,6 +7,15 @@ import (
 
 const threshold float64 = 0.00001
 
+var (
+	// UnitX is the unit vector in the X axis
+	UnitX = Vector3{X: 1.0, Y: 0.0, Z: 0.0}
+	// UnitY is the unit vector in the Y axis
+	UnitY = Vector3{X: 0.0, Y: 1.0, Z: 0.0}
+	// UnitZ is the unit vector in the Z axis
+	UnitZ = Vector3{X: 0.0, Y: 0.0, Z: 1.0}
+)
+
 // Vector3 holds three floats that represent X Y and Z space.
 // It holds both 3D vectors and 3D points.
 type Vector3 struct {

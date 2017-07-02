@@ -25,8 +25,8 @@ func TestEqualityCheck(t *testing.T) {
 }
 
 func TestVectorDivision(t *testing.T) {
-	v := (&Vector3{X: 2.0, Y: 2.0, Z: 1.0}).Divide(2.0)
+	v := (&Vector3{X: 2.0, Y: 2.0, Z: 2.0}).Divide(2.0)
 	if !v.Equal(&Vector3{1.0, 1.0, 1.0}) {
-		t.Error("Division went wrong")
+		t.Error("Division went wrong" + v.String())
 	}
 }
