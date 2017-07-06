@@ -1,26 +1,32 @@
 package main
 
 import (
-	"github.com/ProjectMOA/goraytrace/image"
-	"github.com/ProjectMOA/goraytrace/lighting"
-	"github.com/ProjectMOA/goraytrace/math3d"
+	"fmt"
+	"os"
+	"time"
+
 	"github.com/ProjectMOA/goraytrace/scene"
-	"github.com/ProjectMOA/goraytrace/shape"
 )
+
+func paniciferr(err error) {
+	if err != nil {
+		panic(err)
+	}
+}
 
 func main() {
 	// Setting up a scene
-	myScene := scene.New()
+	if len(os.Args) < 2 {
+		fmt.Println("Need a scene file as a parameter!")
+		os.Exit(1)
+	}
 
-	myScene.AddShape(&shape.Sphere{
-		Position: math3d.Vector3{X: 0.0, Y: 0.0, Z: 1.2},
-		Radius:   0.1})
+	myScene := scene.LoadSceneFile(os.Args[1])
 
-	myScene.AddShape(&shape.Sphere{
-		Position: math3d.Vector3{X: -0.2, Y: 0.2, Z: 2.2},
-		Radius:   0.1})
+	start := time.Now()
+	render := myScene.TraceScene(2000, 2000)
+	elapsed := time.Since(start)
+	fmt.Printf("Rendered in: %s", elapsed)
 
-	myScene.AddLight(lighting.PointLight{Intensity: image.Color{R: 180}})
-	render := myScene.TraceScene(700, 600)
 	render.Save("test.ppm")
 }

@@ -19,7 +19,9 @@ var (
 // Vector3 holds three floats that represent X Y and Z space.
 // It holds both 3D vectors and 3D points.
 type Vector3 struct {
-	X, Y, Z float64
+	X float64 `json:"x"`
+	Y float64 `json:"y"`
+	Z float64 `json:"z"`
 }
 
 // Abs returns the distance from the origin
@@ -117,4 +119,14 @@ func (v *Vector3) String() string {
 // Print the values in the 3D vector
 func (v *Vector3) Print() {
 	fmt.Print(v.String())
+}
+
+// AsMap returns a map representation of the vector
+func (v *Vector3) AsMap() map[string]float64 {
+	return map[string]float64{"x": v.X, "y": v.Y, "z": v.Z}
+}
+
+// VectorFromMap returns the vector defined in the map
+func VectorFromMap(m map[string]interface{}) Vector3 {
+	return Vector3{X: m["x"].(float64), Y: m["y"].(float64), Z: m["z"].(float64)}
 }

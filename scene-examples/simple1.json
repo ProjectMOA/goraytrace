@@ -1,0 +1,60 @@
+{
+	"camera": {
+		"fieldofview": 0.3490659,
+		"focalpoint": {
+			"x": -0,
+			"y": -0,
+			"z": -1.5
+		},
+		"right": {
+			"x": 1,
+			"y": 0,
+			"z": 0
+		},
+		"towards": {
+			"x": 0,
+			"y": 0,
+			"z": 1
+		},
+		"up": {
+			"x": 0,
+			"y": 1,
+			"z": 0
+		},
+		"viewplanedistance": 1
+	},
+	"lights": [
+		{
+			"intensity": {
+				"b": 0,
+				"g": 0,
+				"r": 180
+			},
+			"position": {
+				"x": 0,
+				"y": 0,
+				"z": 0
+			}
+		}
+	],
+	"shapes": [
+		{
+			"position": {
+				"x": 0,
+				"y": 0,
+				"z": 1.2
+			},
+			"radius": 0.1,
+			"type": "sphere"
+		},
+		{
+			"position": {
+				"x": -0.2,
+				"y": 0,
+				"z": 2.2
+			},
+			"radius": 0.1,
+			"type": "sphere"
+		}
+	]
+}
