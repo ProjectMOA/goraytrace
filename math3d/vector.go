@@ -82,6 +82,12 @@ func Distance(pointA *Vector3, pointB *Vector3) float64 {
 	return Subtract(pointA, pointB).Abs()
 }
 
+// Reflect returns the vector reflected off the surface with
+// the given normal
+func (v *Vector3) Reflect(normal *Vector3) *Vector3 {
+	return v.Subtract(normal).Multiply(v.Dot(normal) * 2)
+}
+
 // Equal returns true if both vectors are the same within a
 // margin of error
 func (v *Vector3) Equal(v2 *Vector3) bool {

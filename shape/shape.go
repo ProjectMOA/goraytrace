@@ -7,6 +7,7 @@ import (
 // Shape defines the methods shared by all 3D shapes
 type Shape interface {
 	Intersect(lr *math3d.LightRay) float64
+	NormalAt(point *math3d.Vector3) *math3d.Vector3
 	AsMap() map[string]interface{}
 }
 

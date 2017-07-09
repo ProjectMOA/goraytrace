@@ -37,7 +37,7 @@ func (s *Sphere) Intersect(lr *math3d.LightRay) float64 {
 // NormalAt returns the normal vector of a point of the sphere.
 // point must be a point in the surface of the sphere.
 func (s *Sphere) NormalAt(point *math3d.Vector3) *math3d.Vector3 {
-	return s.Position.Subtract(point).Divide(s.Radius)
+	return point.Subtract(&s.Position).Divide(s.Radius)
 }
 
 // AsMap returns a map representation of this shape

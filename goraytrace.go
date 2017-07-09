@@ -24,7 +24,7 @@ func main() {
 	myScene := scene.LoadSceneFile(os.Args[1])
 
 	start := time.Now()
-	render := myScene.TraceScene(2000, 2000)
+	render := myScene.TraceScene(1000, 1000)
 	elapsed := time.Since(start)
 	fmt.Printf("Rendered in: %s", elapsed)
 

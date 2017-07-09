@@ -15,3 +15,6 @@
 
 # Netpbm images
 *.ppm
+
+# vscode directory
+.vscode/*

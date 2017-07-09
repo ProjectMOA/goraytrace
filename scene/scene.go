@@ -57,13 +57,69 @@ func (s *Scene) TraceScene(width, height int32) *image.Image {
 }
 
 func (s *Scene) traceRay(p *math3d.Vector3, x int32, y int32, img *image.Image) {
+	// Construct the light ray
 	lr := &math3d.LightRay{Direction: *p.Subtract(&s.Camera.FocalPoint).Normalized(), Source: *p}
-	for _, s := range s.Shapes {
-		intersected := s.Intersect(lr) != math.MaxFloat64
-		if intersected {
-			img.Pixels[y][x] = image.Color{R: 200}
+	// Check intersections with the shapes in the scene
+	nearestDistance, nearestShape := s.getNearestIntersection(lr)
+
+	if nearestDistance != math.MaxFloat64 {
+		// The lightray intersected a shape
+		intersection := lr.Source.Add(lr.Direction.Multiply(nearestDistance))
+		// Calculate the radiance at the intersection
+		radiance := s.calculateRadianceAt(intersection, lr, nearestShape)
+		img.Pixels[y][x] = radiance
+	} else {
+		// The lightray didn't intersect any shape. Just fill the pixel in black
+		img.Pixels[y][x] = image.Color{}
+	}
+}
+
+func (s *Scene) calculateRadianceAt(intersection *math3d.Vector3, incidentalRay *math3d.LightRay, sh shape.Shape) image.Color {
+	// trace shadow rays towards all light sources
+	radiance := image.Color{}
+	for _, ls := range s.Lights {
+		pointToLightVector := ls.Position.Subtract(intersection)
+		shadowRay := math3d.LightRay{Direction: *pointToLightVector.Normalized(), Source: *intersection}
+		if !s.inShadow(&shadowRay, pointToLightVector.Abs()) {
+			normal := sh.NormalAt(&ls.Position)
+			// Cosine of the ray of light with the visible normal.
+			cosine := shadowRay.Direction.Dot(normal)
+			if cosine > 0.0 {
+				reflected := incidentalRay.Direction.Multiply(-1).Reflect(normal)
+				rCosine := math3d.Clamp(incidentalRay.Direction.Dot(reflected), 0, 1)
+				shiny := 0.0
+				// Prepared to use phong materials
+				phong := image.White.Divide(math.Pi).Add(image.Black.Multiply((shiny + 2) / (2 * math.Pi) * math.Pow(rCosine, shiny)))
+				radiance = *radiance.Add(ls.Intensity.CMultiply(phong).Multiply(cosine))
+			}
 		}
 	}
+	return radiance
+}
+
+func (s *Scene) getNearestIntersection(lr *math3d.LightRay) (float64, shape.Shape) {
+	var nearestShape shape.Shape
+	nearestDistance := math.MaxFloat64
+	for _, s := range s.Shapes {
+		intersectionDistance := s.Intersect(lr)
+		if intersectionDistance < nearestDistance {
+			nearestDistance = intersectionDistance
+			nearestShape = s
+		}
+	}
+	return nearestDistance, nearestShape
+}
+
+// inShadow returns true if the lightray intersects any shape
+// at a distance that is smaller than distance
+func (s *Scene) inShadow(lr *math3d.LightRay, distance float64) bool {
+	for _, s := range s.Shapes {
+		intersectionDistance := s.Intersect(lr)
+		if intersectionDistance < distance {
+			return true
+		}
+	}
+	return false
 }
 
 // SaveSceneFile saves the scene as a file that can be loaded later
