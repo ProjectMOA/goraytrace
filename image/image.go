@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-
 	"github.com/ProjectMOA/goraytrace/math3d"
 )
 

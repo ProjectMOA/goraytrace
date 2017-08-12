@@ -28,11 +28,11 @@
 			"intensity": {
 				"b": 0,
 				"g": 0,
-				"r": 1.0
+				"r": 0.6
 			},
 			"position": {
 				"x": 0,
-				"y": 0.5,
+				"y": -1,
 				"z": 0.6
 			}
 		}
@@ -44,16 +44,25 @@
 				"y": 0,
 				"z": 1.2
 			},
-			"radius": 0.1,
+			"radius": 0.01,
 			"type": "sphere"
 		},
 		{
 			"position": {
 				"x": -0.2,
-				"y": 0,
+				"y": 0.2,
 				"z": 2.2
 			},
-			"radius": 0.1,
+			"radius": 0.01,
+			"type": "sphere"
+		},
+		{
+			"position": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": -1.5
+			},
+			"radius": 0.5,
 			"type": "sphere"
 		}
 	]

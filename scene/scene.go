@@ -81,7 +81,7 @@ func (s *Scene) calculateRadianceAt(intersection *math3d.Vector3, incidentalRay 
 		pointToLightVector := ls.Position.Subtract(intersection)
 		shadowRay := math3d.LightRay{Direction: *pointToLightVector.Normalized(), Source: *intersection}
 		if !s.inShadow(&shadowRay, pointToLightVector.Abs()) {
-			normal := sh.NormalAt(&ls.Position)
+			normal := sh.NormalAt(&ls.Position).Normalized()
 			// Cosine of the ray of light with the visible normal.
 			cosine := shadowRay.Direction.Dot(normal)
 			if cosine > 0.0 {

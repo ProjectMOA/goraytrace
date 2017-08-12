@@ -22,11 +22,18 @@ func main() {
 	}
 
 	myScene := scene.LoadSceneFile(os.Args[1])
+	RenderScene(myScene, "main", true)
+}
 
+// RenderScene renders the scene passed as a parameter and saves the image
+// with the name
+func RenderScene(aScene *scene.Scene, name string, showTime bool) {
 	start := time.Now()
-	render := myScene.TraceScene(1000, 1000)
+	render := aScene.TraceScene(1000, 1000)
 	elapsed := time.Since(start)
-	fmt.Printf("Rendered in: %s", elapsed)
+	if showTime {
+		fmt.Printf("Rendered in: %s", elapsed)
+	}
 
-	render.Save("test.ppm")
+	render.Save(name + ".ppm")
 }
