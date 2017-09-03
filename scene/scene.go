@@ -43,9 +43,9 @@ func (s *Scene) AddLight(aLightsource lighting.PointLight) {
 
 // TraceScene traces the scene as it currently is, returning
 // the final image.
-func (s *Scene) TraceScene(width, height int32) *image.Image {
+func (s *Scene) TraceScene(width, height int) *image.Image {
 	targetIt := s.Camera.GetIterator(width, height)
-	var x, y int32
+	var x, y int
 	var point *math3d.Vector3
 	render := image.New(width, height)
 	for targetIt.HasNext() {
@@ -56,7 +56,7 @@ func (s *Scene) TraceScene(width, height int32) *image.Image {
 	return render
 }
 
-func (s *Scene) traceRay(p *math3d.Vector3, x int32, y int32, img *image.Image) {
+func (s *Scene) traceRay(p *math3d.Vector3, x int, y int, img *image.Image) {
 	// Construct the light ray
 	lr := &math3d.LightRay{Direction: *p.Subtract(&s.Camera.FocalPoint).Normalized(), Source: *p}
 	// Check intersections with the shapes in the scene
@@ -67,10 +67,10 @@ func (s *Scene) traceRay(p *math3d.Vector3, x int32, y int32, img *image.Image) 
 		intersection := lr.Source.Add(lr.Direction.Multiply(nearestDistance))
 		// Calculate the radiance at the intersection
 		radiance := s.calculateRadianceAt(intersection, lr, nearestShape)
-		img.Pixels[y][x] = radiance
+		img.Set(x, y, radiance.ToNRGBA())
 	} else {
 		// The lightray didn't intersect any shape. Just fill the pixel in black
-		img.Pixels[y][x] = image.Color{}
+		img.Set(x, y, image.Black.ToNRGBA())
 	}
 }
 

@@ -29,7 +29,7 @@ func DefaultPinHole() PinHole {
 
 // GetIterator returns an iterator for the points that must be traced
 // to render an image from a PinHole camera.
-func (ph *PinHole) GetIterator(width, height int32) *TracingTargetIterator {
+func (ph *PinHole) GetIterator(width, height int) *TracingTargetIterator {
 	middlePoint := ph.FocalPoint.Add(ph.Towards.Multiply(ph.ViewPlaneDistance))
 	pixelSize := float64((2.0 * math.Tan(ph.FoV/2.0)) / float64(height))
 	firstPoint := middlePoint.

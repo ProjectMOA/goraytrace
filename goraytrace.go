@@ -35,5 +35,5 @@ func RenderScene(aScene *scene.Scene, name string, showTime bool) {
 		fmt.Printf("Rendered in: %s", elapsed)
 	}
 
-	render.Save(name + ".ppm")
+	render.Save(name)
 }

@@ -13,8 +13,9 @@
 # Project-local glide cache, RE: https://github.com/Masterminds/glide/issues/736
 .glide/
 
-# Netpbm images
+# Image files
 *.ppm
+*.png
 
 # vscode directory
 .vscode/*
