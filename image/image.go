@@ -17,7 +17,7 @@ func New(width int, height int) *Image {
 	return &Image{*stdimg.NewNRGBA(stdimg.Rect(0, 0, width, height))}
 }
 
-// Save saves the image as a ppm image.
+// Save saves the image as a png file.
 func (img *Image) Save(filename string) {
 	file, err := os.Create(filename)
 	if err != nil {
